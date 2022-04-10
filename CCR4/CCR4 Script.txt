@@ -1,0 +1,512 @@
+SECTION "CC4"
+0x020182B5:	lock
+0x020182B6:	faceplayer
+0x020182B7:	loadbytefromptr			destIndex:0x00, source:0x020186F4 //First word of request_recieve_buffer
+0x020182BD:	compare_local_to_value	local:0x00, value:0x00
+0x020182C0:	goto_if					condition:0x01, destination:0x02018301
+//Second meeting
+0x020182C6:	loadword				destIndex:0x00, value:0x02018442 //Like to appraise?
+0x020182CC:	callstd					function:0x05
+0x020182CE:	compare_var_to_value	var:0x800D, value:0x0000
+0x020182D3:	goto_if					condition:0x01, destination:0x02018330 //No
+0x020182D9:	callnative				func:0x02018253 //Yes, verify certificate
+0x020182DE:	call					destination:0x0203E17C
+0x020182E3:	callnative				func:0x0203D0AF //Convert recieved text from ASCII to Pokemon text
+0x020182E8:	loadword				destIndex:0x00, value:0x020184C7
+0x020182EE:	callstd					function:0x04
+0x020182F0:	loadbytefromptr			destIndex:0x00, source:0x02021DC0
+0x020182F6:	compare_local_to_value	local:0x00, value:0x47
+0x020182F9:	goto_if					condition:0x01, destination:0x02018348 //It's gold
+0x020182FF:	release
+0x02018300:	end
+
+//Initial certificate generation
+0x02018301:	loadword				destIndex:0x00, value:0x0201835F //Like to generate?
+0x02018307:	callstd					function:0x05
+0x02018309:	compare_var_to_value	var:0x800D, value:0x0000
+0x0201830E:	goto_if					condition:0x01, destination:0x020182FF //No
+0x02018314:	loadword				destIndex:0x00, value:0x02018398 //Yes, generate ticket
+0x0201831A:	callstd					function:0x04
+0x0201831C:	callnative				func:0x02018235
+0x02018321:	call					destination:0x0203E17C
+0x02018326:	loadword				destIndex:0x00, value:0x020183FB //Certificate recieved
+0x0201832C:	callstd					function:0x04
+0x0201832E:	release
+0x0201832F:	end
+
+//Second conversation
+0x02018330:	loadword				destIndex:0x00, value:0x02018489 //Regenerate?
+0x02018336:	callstd					function:0x05
+0x02018338:	compare_var_to_value	var:0x800D, value:0x0000
+0x0201833D:	goto_if					condition:0x01, destination:0x020182FF //No
+0x02018343:	goto					destination:0x02018314 //Yes
+
+//Success
+0x02018348:	loadword				destIndex:0x00, value:0x020184E3 //Wow, a gold!
+0x0201834E:	callstd					function:0x04
+0x02018350:	playse					song:0x0028
+0x02018353:	callnative				func:0x02018223 //Remove rock at location
+0x02018358:	callnative				func:0x08089C35 //DrawWholeMapView
+0x0201835D:	release
+0x0201835E:	end
+
+//Initial certificate generation message
+0x0201835F:	D1 //W
+0x02018360:	D9 //e
+0x02018361:	E0 //l
+0x02018362:	E0 //l
+0x02018363:	E3 //o
+0x02018364:	AB //!
+0x02018365:	nop
+0x02018366:	BE //D
+0x02018367:	E3 //o
+0x02018368:	nop
+0x02018369:	ED //y
+0x0201836A:	E3 //o
+0x0201836B:	E9 //u
+0x0201836C:	nop
+0x0201836D:	EB //w
+0x0201836E:	D5 //a
+0x0201836F:	E2 //n
+0x02018370:	E8 //t
+0x02018371:	nop
+0x02018372:	E1 //m
+0x02018373:	D9 //e
+0x02018374:	nop
+0x02018375:	E8 //t
+0x02018376:	E3 //o
+0x02018377:	nop
+0x02018378:	DD //i
+0x02018379:	E7 //s
+0x0201837A:	E7 //s
+0x0201837B:	E9 //u
+0x0201837C:	D9 //e
+0x0201837D:	nop
+0x0201837E:	D5 //a
+0x0201837F:	nop
+0x02018380:	E2 //n
+0x02018381:	D9 //e
+0x02018382:	EB //w
+0x02018383:	FE
+0x02018384:	CD //S
+0x02018385:	DD //i
+0x02018386:	E0 //l
+0x02018387:	EA //v
+0x02018388:	D9 //e
+0x02018389:	E6 //r
+0x0201838A:	nop
+0x0201838B:	BD //C
+0x0201838C:	D9 //e
+0x0201838D:	E6 //r
+0x0201838E:	E8 //t
+0x0201838F:	DD //i
+0x02018390:	DA //f
+0x02018391:	DD //i
+0x02018392:	D7 //c
+0x02018393:	D5 //a
+0x02018394:	E8 //t
+0x02018395:	D9 //e
+0x02018396:	AC //?
+0x02018397:	FF
+
+//Confirmed generation message
+0x02018398:	C1 //G
+0x02018399:	E6 //r
+0x0201839A:	D9 //e
+0x0201839B:	D5 //a
+0x0201839C:	E8 //t
+0x0201839D:	AB //!
+0x0201839E:	nop
+0x0201839F:	C3 //I
+0x020183A0:	B4 //'
+0x020183A1:	E1 //m
+0x020183A2:	nop
+0x020183A3:	DB //g
+0x020183A4:	E3 //o
+0x020183A5:	DD //i
+0x020183A6:	E2 //n
+0x020183A7:	DB //g
+0x020183A8:	nop
+0x020183A9:	E8 //t
+0x020183AA:	E3 //o
+0x020183AB:	nop
+0x020183AC:	DB //g
+0x020183AD:	D9 //e
+0x020183AE:	E2 //n
+0x020183AF:	D9 //e
+0x020183B0:	E6 //r
+0x020183B1:	D5 //a
+0x020183B2:	E8 //t
+0x020183B3:	D9 //e
+0x020183B4:	nop
+0x020183B5:	D5 //a
+0x020183B6:	nop
+0x020183B7:	CD //S
+0x020183B8:	DD //i
+0x020183B9:	E0 //l
+0x020183BA:	EA //v
+0x020183BB:	D9 //e
+0x020183BC:	E6 //r
+0x020183BD:	FE
+0x020183BE:	BD //C
+0x020183BF:	D9 //e
+0x020183C0:	E6 //r
+0x020183C1:	E8 //t
+0x020183C2:	DD //i
+0x020183C3:	DA //f
+0x020183C4:	DD //i
+0x020183C5:	D7 //c
+0x020183C6:	D5 //a
+0x020183C7:	E8 //t
+0x020183C8:	D9 //e
+0x020183C9:	nop
+0x020183CA:	E3 //o
+0x020183CB:	DA //f
+0x020183CC:	nop
+0x020183CD:	BD //C
+0x020183CE:	E3 //o
+0x020183CF:	E1 //m
+0x020183D0:	E1 //m
+0x020183D1:	D9 //e
+0x020183D2:	E2 //n
+0x020183D3:	D9 //d
+0x020183D4:	D5 //a
+0x020183D5:	E8 //t
+0x020183D6:	DD //i
+0x020183D7:	E3 //o
+0x020183D8:	E2 //n
+0x020183D9:	nop
+0x020183DA:	DA //f
+0x020183DB:	E3 //o
+0x020183DC:	E6 //r
+0x020183DD:	nop
+0x020183DE:	E8 //t
+0x020183DF:	DC //h
+0x020183E0:	D9 //e
+0x020183E1:	FA
+0x020183E2:	DC //h
+0x020183E3:	E3 //o
+0x020183E4:	E0 //l
+0x020183E5:	D8 //d
+0x020183E6:	D9 //e
+0x020183E7:	E6 //r
+0x020183E8:	nop
+0x020183E9:	E2 //n
+0x020183EA:	D5 //a
+0x020183EB:	E1 //m
+0x020183EC:	D9 //e
+0x020183ED:	nop
+0x020183EE:	E3 //o
+0x020183EF:	DA //f
+0x020183F0:	nop
+0x020183F1:	B1 //"
+0x020183F2:	BB //A
+0x020183F3:	D9 //e
+0x020183F4:	E0 //l
+0x020183F5:	DD //i
+0x020183F6:	E8 //t
+0x020183F7:	D5 //a
+0x020183F8:	B2 //"
+0x020183F9:	AD //.
+0x020183FA:	FF
+
+//Certificate recieved
+0x020183FB:	D3 //Y
+0x020183FC:	E3 //o
+0x020183FD:	E9 //u
+0x020183FE:	E6 //r
+0x020183FF:	nop
+0x02018400:	D7 //c
+0x02018401:	D9 //e
+0x02018402:	E6 //r
+0x02018403:	E8 //t
+0x02018404:	DD //i
+0x02018405:	DA //f
+0x02018406:	DD //i
+0x02018407:	D7 //c
+0x02018408:	D5 //a
+0x02018409:	E8 //t
+0x0201840A:	D9 //e
+0x0201840B:	nop
+0x0201840C:	EB //w
+0x0201840D:	D5 //a
+0x0201840E:	E7 //s
+0x0201840F:	nop
+0x02018410:	E6 //r
+0x02018411:	D9 //e
+0x02018412:	D7 //c
+0x02018413:	D9 //e
+0x02018414:	DD //i
+0x02018415:	EA //v
+0x02018416:	D9 //e
+0x02018417:	D8 //d
+0x02018418:	AD //!
+0x02018419:	FE
+0x0201841A:	CD //S
+0x0201841B:	E4 //p
+0x0201841C:	D9 //e
+0x0201841D:	D5 //a
+0x0201841E:	DF //k
+0x0201841F: 00
+0x02018420: E8 //t
+0x02018421: E3 //o
+0x02018422: 00
+0x02018423:	E1 //m
+0x02018424:	D9 //e
+0x02018425:	nop
+0x02018426:	D5 //a
+0x02018427:	DB //g
+0x02018428:	D5 //a
+0x02018429:	DD //i
+0x0201842A:	E2 //n
+0x0201842B:	nop
+0x0201842C:	E8 //t
+0x0201842D:	E3 //o
+0x0201842E:	nop
+0x0201842F:	DC //h
+0x02018430:	D5 //a
+0x02018431:	EA //v
+0x02018432:	D9 //e
+0x02018433:	nop
+0x02018434:	DD //i
+0x02018435:	E8 //t
+0x02018436:	nop
+0x02018437:	D5 //a
+0x02018438:	E4 //p
+0x02018439:	E4 //p
+0x0201843A:	E6 //r
+0x0201843B:	D5 //a
+0x0201843C:	DD //i
+0x0201843D:	E7 //s
+0x0201843E:	D9 //e
+0x0201843F:	D8 //d
+0x02018440:	AD //.
+0x02018441:	FF
+
+//Appraise certificate confirmation
+0x02018442:	D1 //W
+0x02018443:	D9 //e
+0x02018444:	E0 //l
+0x02018445:	E0 //l
+0x02018446:	E3 //o
+0x02018447:	AB //!
+0x02018448:	nop
+0x02018449:	C3 //I
+0x0201844A:	nop
+0x0201844B:	E7 //s
+0x0201844C:	D9 //e
+0x0201844D:	D9 //e
+0x0201844E:	nop
+0x0201844F:	ED //y
+0x02018450:	E3 //o
+0x02018451:	E9 //u
+0x02018452:	nop
+0x02018453:	DC //h
+0x02018454:	D5 //a
+0x02018455:	EA //v
+0x02018456:	D9 //e
+0x02018457:	nop
+0x02018458:	D5 //a
+0x02018459:	nop
+0x0201845A:	D7 //c
+0x0201845B:	D9 //e
+0x0201845C:	E6 //r
+0x0201845D:	E8 //t
+0x0201845E:	DD //i
+0x0201845F:	DA //f
+0x02018460:	DD //i
+0x02018461:	D7 //c
+0x02018462:	D5 //a
+0x02018463:	E8 //t
+0x02018464:	D9 //e
+0x02018465:	AD //.
+0x02018466:	FE
+0x02018467:	D1 //W
+0x02018468:	E3 //o
+0x02018469:	E9 //u
+0x0201846A:	E0 //l
+0x0201846B:	D8 //d
+0x0201846C:	nop
+0x0201846D:	ED //y
+0x0201846E:	E3 //o
+0x0201846F:	E9 //u
+0x02018470:	nop
+0x02018471:	E0 //l
+0x02018472:	DD //i
+0x02018473:	DF //k
+0x02018474: D9 //e
+0x02018475: 00
+0x02018476: E1 //m
+0x02018477: D9 //e
+0x02018478:	nop
+0x02018479:	E8 //t
+0x0201847A:	E3 //o
+0x0201847B:	nop
+0x0201847C:	D5 //a
+0x0201847D:	E4 //p
+0x0201847E:	E4 //p
+0x0201847F:	E6 //r
+0x02018480:	D5 //a
+0x02018481:	DD //i
+0x02018482:	E7 //s
+0x02018483:	D9 //e
+0x02018484:	nop
+0x02018485:	DD //i
+0x02018486:	E8 //t
+0x02018487:	AC //?
+0x02018488:	FF
+
+//Regenerate confirmation
+0x02018489:	C9 //O
+0x0201848A:	C5 //K
+0x0201848B:	AD //.
+0x0201848C:	nop
+0x0201848D:	C3 //I
+0x0201848E:	E2 //n
+0x0201848F:	nop
+0x02018490:	E8 //t
+0x02018491:	DC //h
+0x02018492:	D5 //a
+0x02018493:	E8 //t
+0x02018494:	nop
+0x02018495:	D7 //c
+0x02018496:	D5 //a
+0x02018497:	E7 //s
+0x02018498:	D9 //e
+0x02018499:	B8 //,
+0x0201849A:	nop
+0x0201849B:	E7 //s
+0x0201849C:	DC //h
+0x0201849D:	E3 //o
+0x0201849E:	E9 //u
+0x0201849F:	E0 //l
+0x020184A0:	D8 //d
+0x020184A1:	nop
+0x020184A2:	C3 //I
+0x020184A3:	nop
+0x020184A4:	DB //g
+0x020184A5:	D9 //e
+0x020184A6:	E2 //n
+0x020184A7:	D9 //e
+0x020184A8:	E6 //r
+0x020184A9:	D5 //a
+0x020184AA:	E8 //t
+0x020184AB:	D9 //e
+0x020184AC:	FE
+0x020184AD:	D5 //a
+0x020184AE:	nop
+0x020184AF:	E2 //n
+0x020184B0:	D9 //e
+0x020184B1:	EB //w
+0x020184B2:	nop
+0x020184B3:	CD //S
+0x020184B4:	DD //i
+0x020184B5:	E0 //l
+0x020184B6:	EA //v
+0x020184B7:	D9 //e
+0x020184B8:	E6 //r
+0x020184B9:	nop
+0x020184BA:	BD //C
+0x020184BB:	D9 //e
+0x020184BC:	E6 //r
+0x020184BD:	E8 //t
+0x020184BE:	DD //i
+0x020184BF:	DA //f
+0x020184C0:	DD //i
+0x020184C1:	D7 //c
+0x020184C2:	D5 //a
+0x020184C3:	E8 //t
+0x020184C4:	D9 //e
+0x020184C5:	AC //?
+0x020184C6:	FF
+
+//Give certificate message
+0x020184C7:	C2 //H
+0x020184C8:	D9 //e
+0x020184C9:	E6 //r
+0x020184CA:	D9 //e
+0x020184CB:	B4 //'
+0x020184CC:	E7 //s
+0x020184CD:	nop
+0x020184CE:	ED //y
+0x020184CF:	E3 //o
+0x020184D0:	E9 //u
+0x020184D1:	E6 //y
+0x020184D2:	nop
+0x020184D3:	D7 //c
+0x020184D4:	D9 //e
+0x020184D5:	E6 //r
+0x020184D6:	E8 //t
+0x020184D7:	DD //i
+0x020184D8:	DA //f
+0x020184D9:	DD //i
+0x020184DA:	D7 //c
+0x020184DB:	D5 //a
+0x020184DC:	E8 //t
+0x020184DD:	D9 //e
+0x020184DE:	AB //!
+0x020184DF:	FE
+0x020184E0:	FD //Print text string
+0x020184E1:	03 //String variable 2
+0x020184E2:	FF
+
+//Success text
+0x020184E3:	D1 //W
+0x020184E4:	E3 //o
+0x020184E5:	EB //w
+0x020184E6:	B8 //,
+0x020184E7:	nop
+0x020184E8:	E8 //t
+0x020184E9:	DC //h
+0x020184EA:	D5 //a
+0x020184EB:	E8 //t
+0x020184EC:	B4 //'
+0x020184ED:	E7 //s
+0x020184EE:	nop
+0x020184EF:	D5 //a
+0x020184F0:	nop
+0x020184F1:	C1 //G
+0x020184F2:	E3 //o
+0x020184F3:	E0 //l
+0x020184F4:	D8 //d
+0x020184F5:	nop
+0x020184F6:	BD //C
+0x020184F7:	D9 //e
+0x020184F8:	E6 //r
+0x020184F9:	E8 //t
+0x020184FA:	DD //i
+0x020184FB:	DA //f
+0x020184FC:	DD //i
+0x020184FD:	D7 //c
+0x020184FE:	D5 //a
+0x020184FF:	E8 //t
+0x02018500:	D9 //e
+0x02018501:	AB //!
+0x02018502:	FE
+0x02018503:	CE //T
+0x02018504:	DC //h
+0x02018505:	D5 //a
+0x02018506:	E8 //t
+0x02018507:	B4 //'
+0x02018508:	E7 //s
+0x02018509:	nop
+0x0201850A:	DC //h
+0x0201850B:	E9 //u
+0x0201850C:	DB //g
+0x0201850D:	D9 //e
+0x0201850E:	E0 //l
+0x0201850F:	ED //y
+0x02018510:	nop
+0x02018511:	DD //i
+0x02018512:	E1 //m
+0x02018513:	E4 //p
+0x02018514:	E6 //r
+0x02018515:	D9 //e
+0x02018516:	E7 //s
+0x02018517:	E7 //s
+0x02018518:	DD //i
+0x02018519:	EA //v
+0x0201851A:	D9 //e
+0x0201851B:	AB //!
+0x0201851C:	FF
+; End of output.
