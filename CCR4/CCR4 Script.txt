@@ -1,4 +1,5 @@
-SECTION "CC4"
+SECTION "CCR4"
+//CCR4 Main
 0x020182B5:	lock
 0x020182B6:	faceplayer
 0x020182B7:	loadbytefromptr			destIndex:0x00, source:0x020186F4 //First word of request_recieve_buffer
@@ -509,4 +510,3 @@ SECTION "CC4"
 0x0201851A:	D9 //e
 0x0201851B:	AB //!
 0x0201851C:	FF
-; End of output.
